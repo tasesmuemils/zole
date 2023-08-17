@@ -51,18 +51,8 @@ export default function RootLayout({ children }) {
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="icon"
-          href="/favicon.ico"
-          type="image/<generated>"
-          // sizes="<generated>"
-        />
-        <link
-          rel="apple-touch-icon"
-          href="apple-touch-icon.png"
-          type="image/png"
-          // sizes="<generated>"
-        />
+
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body
         initial={{ opacity: 0 }}

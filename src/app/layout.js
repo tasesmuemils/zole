@@ -4,9 +4,49 @@ import Navigation from "./Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const APP_NAME = "Zoles punkti";
+const APP_DEFAULT_TITLE = "Zoles punkti";
+const APP_TITLE_TEMPLATE = "%s - Zoles punkti";
+const APP_DESCRIPTION =
+  "Neskrien pēc lapas un pildspalvas, skaiti 'Zoles' punktus šeit";
+
 export const metadata = {
   title: "Zoles punkti",
   description: "Saskaiti zoles punktus",
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  themeColor: "#FFFFFF",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  // openGraph: {
+  //   type: "website",
+  //   siteName: APP_NAME,
+  //   title: {
+  //     default: APP_DEFAULT_TITLE,
+  //     template: APP_TITLE_TEMPLATE,
+  //   },
+  //   description: APP_DESCRIPTION,
+  // },
+  // twitter: {
+  //   card: "summary",
+  //   title: {
+  //     default: APP_DEFAULT_TITLE,
+  //     template: APP_TITLE_TEMPLATE,
+  //   },
+  //   description: APP_DESCRIPTION,
+  // },
 };
 
 export default function RootLayout({ children }) {
@@ -15,7 +55,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className="bg-white transition-all duration-500 dark:bg-slate-800"
     >
-      <head>
+      {/* <head>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
@@ -38,7 +78,7 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="shortcut icon" href="/favicon.ico" />
-      </head>
+      </head> */}
       <body
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

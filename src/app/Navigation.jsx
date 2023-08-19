@@ -32,7 +32,7 @@ export default function Navigation() {
       className="fixed top-0 left-0 bottom-0 h-1/2 z-10"
     >
       <MenuToggler toggle={() => toggleOpen()} />
-      <NavItemsWrapper close={() => toggleOpen()} />
+      <NavItemsWrapper />
     </motion.nav>
   );
 }

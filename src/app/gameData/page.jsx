@@ -66,7 +66,7 @@ export default function GameData() {
                   className="px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
                   key={`${player.player + index}`}
                 >
-                  {player.player}
+                  {getInitials(player.player)}
                 </th>
               ))}
             </tr>
@@ -137,4 +137,15 @@ const Customtd = ({ i, score, rowsCount }) => {
       </span>
     </td>
   );
+};
+
+const getInitials = (fullName) => {
+  const allNames = fullName.trim().split(" ");
+  const initials = allNames.reduce((acc, curr, index) => {
+    if (index === 0 || index === allNames.length - 1) {
+      acc = `${acc}${curr.charAt(0).toUpperCase()}`;
+    }
+    return acc;
+  }, "");
+  return initials;
 };

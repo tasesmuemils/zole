@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Controls from "./Controls";
 import { scoreTable } from "./scoreTable";
 import { motion } from "framer-motion";
@@ -20,6 +20,8 @@ export default function GameData() {
   const [score, setScore] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(true);
 
+  const scrollRef = useRef();
+
   useEffect(() => {
     if (shouldUpdate) setShouldUpdate(false);
 
@@ -29,6 +31,10 @@ export default function GameData() {
       localStorage.removeItem("players");
       localStorage.setItem("players", JSON.stringify(score));
       setPlayersList(JSON.parse(localStorage.getItem("players")));
+    }
+
+    if (scrollRef.current != null) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [shouldUpdate, score]);
 
@@ -49,6 +55,7 @@ export default function GameData() {
     <animated.main
       className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-between p-24"
       style={spring}
+      ref={scrollRef}
     >
       <div>
         <table className="w-full text-sm text-center mb-20 shadow-xl text-gray-500 dark:text-gray-400">

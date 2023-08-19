@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navigation from "./Navigation";
+import Providers from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,7 +48,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="bg-white transition-all duration-500 dark:bg-slate-800"
+      className="bg-white transition-all duration-100 dark:bg-slate-800"
     >
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -55,14 +56,17 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
+        // initial={{ opacity: 0 }}
+        // animate={{ opacity: 1 }}
+        // transition={{ duration: 0.3, delay: 0.1 }}
         className={inter.className}
       >
-        <Navigation />
-        {/* <NewNavigation /> */}
-        {children}
+        {" "}
+        <Providers>
+          <Navigation />
+          {/* <NewNavigation /> */}
+          {children}
+        </Providers>
       </body>
     </html>
   );

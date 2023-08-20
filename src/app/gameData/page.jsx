@@ -5,7 +5,7 @@ import Controls from "./Controls";
 import { scoreTable } from "./scoreTable";
 import { motion } from "framer-motion";
 import { useSpring, animated } from "@react-spring/web";
-import { ImBin, ImSpades } from "react-icons/im";
+import { ImBin, ImSpades, ImClubs } from "react-icons/im";
 import Link from "next/link";
 import Spinner from "../Spinner";
 
@@ -87,10 +87,19 @@ export default function GameData() {
       >
         <ImBin className="text-slate-500 dark:text-slate-100" />
       </button>
+      {playersList && playersList[0].score.length > 0 && (
+        <div className="z-[1] flex justify-center items-center flex-col bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none fixed top-[206px] w-[50px] h-[50px] rounded-r-lg">
+          <ImClubs className="text-slate-500 dark:text-slate-100 w-1/5" />
+          <p className="text-slate-500 dark:text-slate-100">
+            {playersList[0].score.length}
+          </p>
+        </div>
+      )}
       <main
         className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-between p-24"
         ref={scrollRef}
       >
+        {/* {console.log(playersList)} */}
         <div>
           <animated.table
             style={spring}

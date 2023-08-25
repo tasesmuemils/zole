@@ -8,6 +8,7 @@ import { useSpring, animated } from "@react-spring/web";
 import { ImBin, ImSpades, ImClubs } from "react-icons/im";
 import Link from "next/link";
 import Spinner from "../Spinner";
+import { avatarIcons } from "../PlayersForms";
 
 const springFade = () => {
   return useSpring({
@@ -112,7 +113,13 @@ export default function GameData() {
                     className="px-3 sm:px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
                     key={`${player.player + index}`}
                   >
-                    {getInitials(player.player)}
+                    {console.log(player)}
+                    {console.log(avatarIcons)}
+                    {
+                      avatarIcons.find((icon) => icon.key == player.icon.key)
+                        .label
+                    }
+                    {/* {getInitials(player.player)} */}
                   </th>
                 ))}
               </tr>

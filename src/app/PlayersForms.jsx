@@ -3,7 +3,26 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import Select, { components } from "react-select";
-import { ImBin, ImSpades, ImClubs } from "react-icons/im";
+import {
+  ImBin,
+  ImSpades,
+  ImClubs,
+  ImPacman,
+  ImPaintFormat,
+  ImVideoCamera,
+  ImMusic,
+  ImBug,
+  ImHappy,
+  ImEvil,
+  ImTux,
+  ImAndroid,
+  ImTwitter,
+  ImSleepy,
+  ImCool,
+  ImPowerCord,
+  ImBullhorn,
+  ImHipster,
+} from "react-icons/im";
 import Spinner from "./Spinner";
 import { clsx } from "clsx";
 
@@ -22,26 +41,31 @@ export default function PlayersForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("From SUBMIT", selectedAvatar);
     setError(false);
-    setIsLoading(true);
+    const iconFillCheck = selectedAvatar.every(
+      (item) => Object.keys(item).length > 1 || item == false
+    );
+    console.log("check", iconFillCheck);
 
     console.log(
-      e.target[0].value,
-      // e.target[1].value,
-      e.target[2].value,
-      e.target[4].value
+      e.target[0].value.length,
+      e.target[2].value.length,
+      e.target[4].value.length,
+      e.target[6].tagName
     );
 
     if (
       e.target[0].value.length == 0 ||
       e.target[2].value.length == 0 ||
       e.target[4].value.length == 0 ||
-      (e.target[6].tagName != "BUTTON" && e.target[6].value.length == 0)
+      (e.target[6].tagName != "BUTTON" && e.target[6].value.length == 0) ||
+      !iconFillCheck
     ) {
       setError(true);
       return;
     }
+
+    setIsLoading(true);
     // Captures all input values
     const playersList = [
       { player: e.target[0].value, icon: selectedAvatar[0], score: [] },
@@ -49,8 +73,6 @@ export default function PlayersForm(props) {
       { player: e.target[4].value, icon: selectedAvatar[2], score: [] },
     ];
 
-    console.log(selectedAvatar[0].value);
-    console.log(playersList);
     e.target[6].tagName != "BUTTON" &&
       playersList.push({
         player: e.target[6].value,
@@ -58,7 +80,6 @@ export default function PlayersForm(props) {
         score: [],
       });
 
-    console.log(playersList);
     // Sets values to local storage
     localStorage.removeItem("players");
     localStorage.setItem("players", JSON.stringify(playersList));
@@ -75,32 +96,16 @@ export default function PlayersForm(props) {
   const handleChange = (e, no) => {
     setSelectedAvatar(
       selectedAvatar.map((item) => {
-        console.log("selectedAvatar", item);
-        console.log(Array.isArray(e), e);
         if (selectedAvatar.indexOf(item) === no) {
           return e;
         } else {
-          console.log("TEST", item);
           return item;
         }
       })
     );
   };
 
-  // const Option = (props) => (
-  //   <components.Option
-  //     {...props}
-  //     className="bg-white transition-all duration-500 dark:bg-slate-800"
-  //   >
-  //     {props.data.icon}
-  //   </components.Option>
-  // );
-
-  // const SingleValue = ({ children, ...props }) => (
-  //   <components.SingleValue {...props}>
-  //     {selectedAvatar[0].icon}
-  //   </components.SingleValue>
-  // );
+  console.log(selectedAvatar);
 
   return (
     <main className="bg-white transition-all duration-500 dark:bg-slate-800 flex flex-col justify-center items-center min-h-screen p-24">
@@ -140,7 +145,13 @@ export default function PlayersForm(props) {
                     "bg-white transition-all duration-500 dark:bg-slate-800",
                   placeholder: () => "text-slate-500 dark:text-slate-200",
                 }}
-                options={avatarIcons}
+                options={avatarIcons.filter(
+                  (icon) =>
+                    icon.key !=
+                    selectedAvatar
+                      .map((stateIcon) => stateIcon.key)
+                      .filter((key) => key == icon.key)
+                )}
                 onChange={(event) => handleChange(event, 0)}
                 placeholder="Izvēlies ikonu..."
               />
@@ -169,7 +180,13 @@ export default function PlayersForm(props) {
                     "bg-white transition-all duration-500 dark:bg-slate-800",
                   placeholder: () => "text-slate-500 dark:text-slate-200",
                 }}
-                options={avatarIcons}
+                options={avatarIcons.filter(
+                  (icon) =>
+                    icon.key !=
+                    selectedAvatar
+                      .map((stateIcon) => stateIcon.key)
+                      .filter((key) => key == icon.key)
+                )}
                 onChange={(event) => handleChange(event, 1)}
                 placeholder="Izvēlies ikonu..."
               />
@@ -198,7 +215,13 @@ export default function PlayersForm(props) {
                     "bg-white transition-all duration-500 dark:bg-slate-800",
                   placeholder: () => "text-slate-500 dark:text-slate-200",
                 }}
-                options={avatarIcons}
+                options={avatarIcons.filter(
+                  (icon) =>
+                    icon.key !=
+                    selectedAvatar
+                      .map((stateIcon) => stateIcon.key)
+                      .filter((key) => key == icon.key)
+                )}
                 onChange={(event) => handleChange(event, 2)}
                 placeholder="Izvēlies ikonu..."
               />
@@ -229,7 +252,13 @@ export default function PlayersForm(props) {
                       "bg-white transition-all duration-500 dark:bg-slate-800",
                     placeholder: () => "text-slate-500 dark:text-slate-200",
                   }}
-                  options={avatarIcons}
+                  options={avatarIcons.filter(
+                    (icon) =>
+                      icon.key !=
+                      selectedAvatar
+                        .map((stateIcon) => stateIcon.key)
+                        .filter((key) => key == icon.key)
+                  )}
                   onChange={(event) => handleChange(event, 3)}
                   placeholder="Izvēlies ikonu..."
                 />
@@ -269,57 +298,6 @@ const CustomInput = () => {
   );
 };
 
-const InputSelect = ({ selectName, selectValue }) => {
-  const [selectedAvatar, setSelectedAvatar] = useState(null);
-
-  const handleChange = (value) => {
-    setSelectedAvatar(value);
-    // selectValue(value);
-  };
-
-  console.log(selectedAvatar);
-
-  const SingleValue = ({ children, ...props }) => (
-    <components.SingleValue {...props}>
-      {selectedAvatar.icon}
-    </components.SingleValue>
-  );
-
-  // Pass to parent
-  if (selectedAvatar) {
-    selectValue(selectedAvatar);
-  }
-
-  return (
-    <div className="flex flex-col justify-center items-center">
-      <CustomInput />
-      <Select
-        classNames={{
-          control: () =>
-            "bg-white transition-all duration-500 dark:bg-slate-800",
-        }}
-        name={selectName}
-        value={Option.filter((obj) =>
-          selectedAvatar[0].value.includes(obj.value)
-        )}
-        options={avatarIcons}
-        onChange={(event) => handleChange(event, 0)}
-        styles={{
-          singleValue: (base) => ({
-            ...base,
-            display: "flex",
-            alignItems: "center",
-          }),
-        }}
-        components={{
-          Option,
-          // SingleValue,
-        }}
-      />
-    </div>
-  );
-};
-
 export const avatarIcons = [
   {
     value: <ImBin className="text-slate-500 dark:text-slate-200" />,
@@ -335,5 +313,80 @@ export const avatarIcons = [
     value: <ImClubs className="text-slate-500 dark:text-slate-200" />,
     label: <ImClubs className="text-slate-500 dark:text-slate-200" />,
     key: "ImClubs",
+  },
+  {
+    value: <ImPacman className="text-slate-500 dark:text-slate-200" />,
+    label: <ImPacman className="text-slate-500 dark:text-slate-200" />,
+    key: "ImPacman",
+  },
+  {
+    value: <ImPaintFormat className="text-slate-500 dark:text-slate-200" />,
+    label: <ImPaintFormat className="text-slate-500 dark:text-slate-200" />,
+    key: "ImPaintFormat",
+  },
+  {
+    value: <ImVideoCamera className="text-slate-500 dark:text-slate-200" />,
+    label: <ImVideoCamera className="text-slate-500 dark:text-slate-200" />,
+    key: "ImVideoCamera",
+  },
+  {
+    value: <ImMusic className="text-slate-500 dark:text-slate-200" />,
+    label: <ImMusic className="text-slate-500 dark:text-slate-200" />,
+    key: "ImMusic",
+  },
+  {
+    value: <ImBug className="text-slate-500 dark:text-slate-200" />,
+    label: <ImBug className="text-slate-500 dark:text-slate-200" />,
+    key: "ImBug",
+  },
+  {
+    value: <ImHappy className="text-slate-500 dark:text-slate-200" />,
+    label: <ImHappy className="text-slate-500 dark:text-slate-200" />,
+    key: "ImHappy",
+  },
+  {
+    value: <ImEvil className="text-slate-500 dark:text-slate-200" />,
+    label: <ImEvil className="text-slate-500 dark:text-slate-200" />,
+    key: "ImEvil",
+  },
+  {
+    value: <ImTux className="text-slate-500 dark:text-slate-200" />,
+    label: <ImTux className="text-slate-500 dark:text-slate-200" />,
+    key: "ImTux",
+  },
+  {
+    value: <ImAndroid className="text-slate-500 dark:text-slate-200" />,
+    label: <ImAndroid className="text-slate-500 dark:text-slate-200" />,
+    key: "ImAndroid",
+  },
+  {
+    value: <ImTwitter className="text-slate-500 dark:text-slate-200" />,
+    label: <ImTwitter className="text-slate-500 dark:text-slate-200" />,
+    key: "ImTwitter",
+  },
+  {
+    value: <ImSleepy className="text-slate-500 dark:text-slate-200" />,
+    label: <ImSleepy className="text-slate-500 dark:text-slate-200" />,
+    key: "ImSleepy",
+  },
+  {
+    value: <ImCool className="text-slate-500 dark:text-slate-200" />,
+    label: <ImCool className="text-slate-500 dark:text-slate-200" />,
+    key: "ImCool",
+  },
+  {
+    value: <ImPowerCord className="text-slate-500 dark:text-slate-200" />,
+    label: <ImPowerCord className="text-slate-500 dark:text-slate-200" />,
+    key: "ImPowerCord",
+  },
+  {
+    value: <ImBullhorn className="text-slate-500 dark:text-slate-200" />,
+    label: <ImBullhorn className="text-slate-500 dark:text-slate-200" />,
+    key: "ImBullhorn",
+  },
+  {
+    value: <ImHipster className="text-slate-500 dark:text-slate-200" />,
+    label: <ImHipster className="text-slate-500 dark:text-slate-200" />,
+    key: "ImHipster",
   },
 ];

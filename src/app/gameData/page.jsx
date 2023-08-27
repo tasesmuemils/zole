@@ -5,7 +5,7 @@ import Controls from "./Controls";
 import { scoreTable } from "./scoreTable";
 import { motion } from "framer-motion";
 import { useSpring, animated } from "@react-spring/web";
-import { ImBin, ImSpades, ImClubs } from "react-icons/im";
+import { ImBin, ImSpades, ImClubs, ImPlus } from "react-icons/im";
 import Link from "next/link";
 import Spinner from "../Spinner";
 import { avatarIcons } from "../PlayersForms";
@@ -26,6 +26,7 @@ export default function GameData() {
   const [openDeleteModal, setDeleteModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openNameModal, setOpenNameModal] = useState(false);
+  const [openControls, setOpenControls] = useState(false);
 
   // Capture Delete last result Modals result
   const setDeleteLastResult = (value) => {
@@ -41,6 +42,11 @@ export default function GameData() {
   // Close open "New Game" modal
   const handleNewGameModal = () => {
     setOpenModal(true);
+  };
+
+  // Handle Controls open
+  const handleControlsOpen = () => {
+    setOpenControls(true);
   };
 
   const scrollRef = useRef();
@@ -138,11 +144,20 @@ export default function GameData() {
               />
             )}
           </animated.table>
-          <Controls
-            getScore={getScore}
-            scores={scoreTable}
-            players={playersList}
-          />
+          <button
+            onClick={handleControlsOpen}
+            className="bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
+          >
+            <ImPlus />
+          </button>
+          {openControls && (
+            <Controls
+              getScore={getScore}
+              scores={scoreTable}
+              players={playersList}
+              open={setOpenControls}
+            />
+          )}
         </div>
       </main>
       {openModal && <PopupModal open={setOpenModal} />}

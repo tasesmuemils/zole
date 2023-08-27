@@ -154,6 +154,7 @@ export default function PlayersForm(props) {
                 )}
                 onChange={(event) => handleChange(event, 0)}
                 placeholder="Izvēlies ikonu..."
+                isSearchable={false}
               />
             </div>
             <div>
@@ -189,6 +190,7 @@ export default function PlayersForm(props) {
                 )}
                 onChange={(event) => handleChange(event, 1)}
                 placeholder="Izvēlies ikonu..."
+                isSearchable={false}
               />
             </div>
             <div>
@@ -224,6 +226,7 @@ export default function PlayersForm(props) {
                 )}
                 onChange={(event) => handleChange(event, 2)}
                 placeholder="Izvēlies ikonu..."
+                isSearchable={false}
               />
             </div>
 
@@ -261,6 +264,7 @@ export default function PlayersForm(props) {
                   )}
                   onChange={(event) => handleChange(event, 3)}
                   placeholder="Izvēlies ikonu..."
+                  isSearchable={false}
                 />
               </div>
             ) : null}

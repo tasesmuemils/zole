@@ -25,6 +25,7 @@ export default function GameData() {
   const [shouldUpdate, setShouldUpdate] = useState(true);
   const [openDeleteModal, setDeleteModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openNameModal, setOpenNameModal] = useState(false);
 
   // Capture Delete last result Modals result
   const setDeleteLastResult = (value) => {
@@ -100,26 +101,32 @@ export default function GameData() {
         className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-between p-24"
         ref={scrollRef}
       >
-        {/* {console.log(playersList)} */}
         <div>
           <animated.table
             style={spring}
-            className="w-full text-sm text-center mb-20 shadow-xl text-gray-500 dark:text-gray-400"
+            className="relative w-full text-sm text-center mb-20 shadow-xl text-gray-500 dark:text-gray-400"
           >
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
+            <thead
+              onClick={setOpenNameModal}
+              className="sticky text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr
+                style={{
+                  textAlign: "-moz-center",
+                }}
+              >
                 {playersList.map((player, index) => (
                   <th
-                    className="px-3 sm:px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
+                    style={{
+                      textAlign: "-webkit-center",
+                    }}
+                    className=" px-3 sm:px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
                     key={`${player.player + index}`}
                   >
-                    {console.log(player)}
-                    {console.log(avatarIcons)}
                     {
                       avatarIcons.find((icon) => icon.key == player.icon.key)
                         .label
                     }
-                    {/* {getInitials(player.player)} */}
                   </th>
                 ))}
               </tr>
@@ -141,6 +148,9 @@ export default function GameData() {
       {openModal && <PopupModal open={setOpenModal} />}
       {openDeleteModal && (
         <DeleteModal open={setDeleteModal} lastResult={setDeleteLastResult} />
+      )}
+      {openNameModal && (
+        <NameModal open={setOpenNameModal} playersList={playersList} />
       )}
     </>
   );
@@ -195,17 +205,6 @@ const Customtd = ({ i, score, rowsCount }) => {
       </span>
     </td>
   );
-};
-
-const getInitials = (fullName) => {
-  const allNames = fullName.trim().split(" ");
-  const initials = allNames.reduce((acc, curr, index) => {
-    if (index === 0 || index === allNames.length - 1) {
-      acc = `${acc}${curr.charAt(0).toUpperCase()}`;
-    }
-    return acc;
-  }, "");
-  return initials;
 };
 
 const DeleteModal = ({ open, lastResult }) => {
@@ -283,6 +282,7 @@ const DeleteModal = ({ open, lastResult }) => {
 
 const PopupModal = ({ open }) => {
   const handlePageChange = () => {
+    localStorage.removeItem("players");
     open(false);
     close(true);
   };
@@ -343,6 +343,58 @@ const PopupModal = ({ open }) => {
                 Tomēr nē
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const NameModal = ({ open, playersList }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      id="popup-modal"
+      className="flex justify-center items-center bg-slate-700 bg-opacity-80 fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 min-h-screen"
+    >
+      <div className="relative w-full max-w-md max-h-full">
+        <div className="py-3 relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            type="button"
+            className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            onClick={() => open(false)}
+          >
+            <svg
+              className="w-3 h-3"
+              // aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span className="sr-only">Close modal</span>
+          </button>
+          <div className="pt-10 pb-5 px-6 text-center">
+            {playersList.map((player, index) => (
+              <div
+                className="py-2 flex justify-center items-center"
+                key={`${player.player + index}ModalIcon`}
+              >
+                {avatarIcons.find((icon) => icon.key == player.icon.key).label}
+                <h2 className="pl-4 break-all basis-9/12 text-left text-xl text-slate-500 dark:text-slate-100">
+                  {player.player}
+                </h2>
+              </div>
+            ))}
           </div>
         </div>
       </div>

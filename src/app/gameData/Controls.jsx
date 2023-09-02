@@ -7,13 +7,6 @@ export default function Controls({ scores, players, getScore, open }) {
   const [winner, setWinner] = useState(null);
   const [gameType, setGameType] = useState(null);
   const [lielais, setLielais] = useState(null);
-  const [height, setHeight] = useState(0);
-
-  const ref = useRef(null);
-
-  useEffect(() => {
-    setHeight(ref.current.clientHeight);
-  });
 
   const handleGameTypeClick = (e) => {
     setGameType(e.target.textContent);
@@ -51,11 +44,13 @@ export default function Controls({ scores, players, getScore, open }) {
     open(false);
   };
 
-  // console.log(height);
+  // Dont show scenario page for gametype "Galdiņš"
+  if(gameType == "Galdiņš" && winner) {
+    handleScenario(scores[gameType]["Spēlētājs, kurš zaudē"][players.length])
+  }
 
   return (
     <div
-      ref={ref}
       className="z-10 bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 w-full h-full px-10 py-5 fixed bottom-0 left-0 flex justify-center items-center"
     >
       <div className="grid justify-center">
@@ -172,7 +167,7 @@ export default function Controls({ scores, players, getScore, open }) {
             </div>
           </motion.div>
         )}
-        {gameType != "Lielais" && gameType != "Zole" && winner && (
+        {gameType == "Mazā zole" && winner && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

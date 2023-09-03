@@ -46,8 +46,8 @@ export default function About() {
               </div>
               <p>
                 Aplikācija ir izveidota, lai pirms kārtējā zoles vakara nav
-                jāskrien un jāmeklē papīrs un rakstāmais. Punktus var skaitīt
-                tieši šeit
+                jāskrien un jāmeklē papīrs, un rakstāmais. Punktus var skaitīt
+                šeit.
               </p>
             </div>
             <div className="mt-2 mb-5">
@@ -86,7 +86,7 @@ export default function About() {
                       </svg>
                     </button>
                     <p className="pl-3">
-                      Izvēlnes poga ir pieejama no jebkuras vietas aplikācijā.
+                      Izvēlnes poga ir pieejama no jebkuras vietas aplikācijā
                     </p>
                   </div>
                   <div>
@@ -118,12 +118,12 @@ export default function About() {
                   </div>
                 </div>
                 <p className="pb-3">
-                  Tālāk jaievada spēlētāju vārdi un katram spēlētājam jāizvēlās
-                  ikona, kas attēlosies punktu tabulā
+                  Tālāk jāievada spēlētāju vārdi, un katram spēlētājam jāizvēlās
+                  ikona, kas attēlosies punktu tabulā.
                 </p>
                 <div>
                   <p className="pb-3">
-                    Spēles skatā ir pieejama punktu tabula un vairākas opcijas:
+                    Spēles skatā ir pieejama punktu tabula, un vairākas opcijas:
                   </p>
                   <ul>
                     <li className="flex flex-row items-center py-4">
@@ -132,7 +132,7 @@ export default function About() {
                       </button>
                       <p className="pl-3">
                         Atver "Punktu ievades" skatus, kur jāizvēlās spēles
-                        veids un scenārijs kā tika izspēlēta pēdējā partija
+                        veids un scenārijs, kā tika izspēlēta pēdējā partija.
                       </p>
                     </li>
                     <li className="flex flex-row items-center py-4">
@@ -159,7 +159,7 @@ export default function About() {
                 <p>
                   Ja ir piemirsies, kura ikona bija kuram spēlētājam, uzspiežot
                   uz ikonām tabulas augšā, atvērsies saraksts ar ikonām un kuram
-                  spēlētājam pieder konkrētā ikona
+                  spēlētājam pieder konkrētā ikona.
                 </p>
               </div>
             </div>
@@ -170,11 +170,11 @@ export default function About() {
               <p>
                 Aplikācija ir uzbūvēta kā PWA ("Progressive web app"). Tas
                 nozīmē, ka aplikācija ir būvēta ar web tehnoloģijām, bet to ir
-                iespējams uzlikt kā aplikāciju uz jebkuras ierīces. Tas padara
+                iespējams uzlikt, kā aplikāciju uz jebkuras ierīces. Tas padara
                 "Zoles" punktu skaitīšanu daudz ērtāku, jo saiti var pievienot
                 kā aplikāciju uz telefona, planšetes vai datora. Īsas
-                instrukcijas kā pievienot PWA kā aplikāciju dažādām ierīcēm var
-                atrast{" "}
+                instrukcijas, kā pievienot PWA, kā aplikāciju dažādām ierīcēm
+                var atrast.
                 <a
                   className="text-xl text-cyan-500 underline"
                   target="_blank"

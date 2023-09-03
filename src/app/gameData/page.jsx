@@ -27,6 +27,7 @@ export default function GameData() {
   const [openModal, setOpenModal] = useState(false);
   const [openNameModal, setOpenNameModal] = useState(false);
   const [openControls, setOpenControls] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Capture Delete last result Modals result
   const setDeleteLastResult = (value) => {
@@ -107,60 +108,64 @@ export default function GameData() {
         className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-between p-24"
         ref={scrollRef}
       >
-        <div>
-          <animated.table
-            style={spring}
-            className="relative w-full text-sm text-center mb-20 shadow-xl text-gray-500 dark:text-gray-400"
-          >
-            <thead
-              onClick={setOpenNameModal}
-              className="sticky text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <div>
+            <animated.table
+              style={spring}
+              className="relative w-full text-sm text-center mb-20 shadow-xl text-gray-500 dark:text-gray-400"
             >
-              <tr
-                style={{
-                  textAlign: "-moz-center",
-                }}
+              <thead
+                onClick={setOpenNameModal}
+                className="sticky cursor-pointer text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
               >
-                {playersList.map((player, index) => (
-                  <th
-                    style={{
-                      textAlign: "-webkit-center",
-                    }}
-                    className=" px-3 sm:px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
-                    key={`${player.player + index}`}
-                  >
-                    {
-                      avatarIcons.find((icon) => icon.key == player.icon.key)
-                        .label
-                    }
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            {playersList[0].score.length > 0 && (
-              <ScoreRows
-                rowsCount={playersList[0].score.length}
-                playersList={playersList}
+                <tr
+                  style={{
+                    textAlign: "-moz-center",
+                  }}
+                >
+                  {playersList.map((player, index) => (
+                    <th
+                      style={{
+                        textAlign: "-webkit-center",
+                      }}
+                      className=" px-3 sm:px-6 py-3 sticky top-0 bg-gray-50 dark:bg-gray-700 text-slate-500 dark:text-white transition-all duration-500 text-sm leading-6 truncate"
+                      key={`${player.player + index}`}
+                    >
+                      {
+                        avatarIcons.find((icon) => icon.key == player.icon.key)
+                          .label
+                      }
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              {playersList[0].score.length > 0 && (
+                <ScoreRows
+                  rowsCount={playersList[0].score.length}
+                  playersList={playersList}
+                />
+              )}
+            </animated.table>
+            <button
+              onClick={handleControlsOpen}
+              className="bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
+            >
+              <ImPlus />
+            </button>
+            {openControls && (
+              <Controls
+                getScore={getScore}
+                scores={scoreTable}
+                players={playersList}
+                open={setOpenControls}
               />
             )}
-          </animated.table>
-          <button
-            onClick={handleControlsOpen}
-            className="bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
-          >
-            <ImPlus />
-          </button>
-          {openControls && (
-            <Controls
-              getScore={getScore}
-              scores={scoreTable}
-              players={playersList}
-              open={setOpenControls}
-            />
-          )}
-        </div>
+          </div>
+        )}
       </main>
-      {openModal && <PopupModal open={setOpenModal} />}
+      {openModal && <PopupModal open={setOpenModal} loading={setIsLoading} />}
       {openDeleteModal && (
         <DeleteModal open={setDeleteModal} lastResult={setDeleteLastResult} />
       )}
@@ -295,9 +300,10 @@ const DeleteModal = ({ open, lastResult }) => {
   );
 };
 
-const PopupModal = ({ open }) => {
+const PopupModal = ({ open, loading }) => {
   const handlePageChange = () => {
     localStorage.removeItem("players");
+    loading(true);
     open(false);
     close(true);
   };

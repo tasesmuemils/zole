@@ -45,14 +45,12 @@ export default function Controls({ scores, players, getScore, open }) {
   };
 
   // Dont show scenario page for gametype "Galdiņš"
-  if(gameType == "Galdiņš" && winner) {
-    handleScenario(scores[gameType]["Spēlētājs, kurš zaudē"][players.length])
+  if (gameType == "Galdiņš" && winner) {
+    handleScenario(scores[gameType]["Spēlētājs, kurš zaudē"][players.length]);
   }
 
   return (
-    <div
-      className="z-10 bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 w-full h-full px-10 py-5 fixed bottom-0 left-0 flex justify-center items-center"
-    >
+    <div className="z-10 bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 w-full h-full px-10 py-5 fixed bottom-0 left-0 flex justify-center items-center">
       <div className="grid justify-center">
         <button
           type="button"
@@ -246,13 +244,42 @@ export default function Controls({ scores, players, getScore, open }) {
 }
 
 const ControlsButton = ({ text, index, onClickFunction }) => {
+  const scenarioTextChange = (text) => {
+    let value = "";
+    switch (text) {
+      case "Uzvar ar 61-90 acīm":
+        value = "Uzvar";
+        break;
+      case "Uzvar ar 91 vai vairāk acīm":
+        value = "Uzvar jaņos";
+        break;
+      case "Uzvar iegūstot visus stiķus":
+        value = "Uzvar bezstiķī";
+        break;
+      case "Zaudē ar 31-60 acīm":
+        value = "Zaude";
+        break;
+      case "Zaudē ar 30 un mazāk acīm":
+        value = "Zaudē jaņos";
+        break;
+      case "Zaudē neiegūstot nevienu stiķi":
+        value = "Zaudē bezstiķī";
+        break;
+      default:
+        value = text;
+        break;
+    }
+
+    return value;
+  };
+
   return (
     <button
       className="rounded-lg text-base leading-6 font-semibold px-6 py-6 m-3 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 dark:text-slate-100 dark:inset transition-all duration-500 dark:bg-slate-500"
       onClick={onClickFunction}
       key={text + index}
     >
-      {text}
+      {scenarioTextChange(text)}
     </button>
   );
 };

@@ -63,21 +63,21 @@ export default function About() {
                     <button className="px-3 py-4 flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none rounded-r-lg">
                       <svg width="23" height="18" viewBox="0 0 23 23">
                         <path
-                          class="stroke-slate-500 dark:stroke-white"
+                          className="stroke-slate-500 dark:stroke-white"
                           fill="transparent"
                           strokeWidth="3"
                           strokeLinecap="round"
                           d="M 2 2.5 L 20 2.5"
                         ></path>
                         <path
-                          class="stroke-slate-500 dark:stroke-white"
+                          className="stroke-slate-500 dark:stroke-white"
                           fill="transparent"
                           strokeWidth="3"
                           strokeLinecap="round"
                           d="M 2 9.423 L 20 9.423"
                         ></path>
                         <path
-                          class="stroke-slate-500 dark:stroke-white"
+                          className="stroke-slate-500 dark:stroke-white"
                           fill="transparent"
                           strokeWidth="3"
                           strokeLinecap="round"
@@ -167,6 +167,29 @@ export default function About() {
               <div className="py-2">
                 <h2 className="text-lg font-semibold">PWA</h2>
               </div>
+              <p>
+                Aplikācija ir uzbūvēta kā PWA ("Progressive web app"). Tas
+                nozīmē, ka aplikācija ir būvēta ar web tehnoloģijām, bet to ir
+                iespējams uzlikt kā aplikāciju uz jebkuras ierīces. Tas padara
+                "Zoles" punktu skaitīšanu daudz ērtāku, jo saiti var pievienot
+                kā aplikāciju uz telefona, planšetes vai datora. Īsas
+                instrukcijas kā pievienot PWA kā aplikāciju dažādām ierīcēm var
+                atrast{" "}
+                <a
+                  className="text-xl text-cyan-500 underline"
+                  target="_blank"
+                  href="https://www.cdc.gov/niosh/mining/content/hearingloss/installPWA.html"
+                  rel="noopener noreferrer"
+                >
+                  šeit
+                </a>
+              </p>
+            </div>
+            <div className="mt-2 mb-5">
+              <p>
+                Aplikāciju uzbūvēja Emīls Bisenieks. Atsauksmes, ieteikumus un
+                kļūdas sūtiet e-pastā: emils.bisenieks93@gmail.com
+              </p>
             </div>
           </div>
 

@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
-import Select, { components } from "react-select";
+import Select from "react-select";
 import {
   ImBin,
   ImSpades,
@@ -28,6 +28,7 @@ import { clsx } from "clsx";
 
 export default function PlayersForm(props) {
   const [error, setError] = useState(false);
+  const [duplicateError, setDuplicateError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState([
     { value: [] },
@@ -54,6 +55,7 @@ export default function PlayersForm(props) {
       e.target[6].tagName
     );
 
+    // Checks form fill
     if (
       e.target[0].value.length == 0 ||
       e.target[2].value.length == 0 ||
@@ -62,6 +64,18 @@ export default function PlayersForm(props) {
       !iconFillCheck
     ) {
       setError(true);
+      return;
+    }
+
+    const checkDuplicates = [
+      e.target[0].value,
+      e.target[2].value,
+      e.target[4].value,
+      e.target[6].tagName != "BUTTON" && e.target[6].value,
+    ];
+
+    if (checkDuplicates.length !== new Set(checkDuplicates).size) {
+      setDuplicateError(true);
       return;
     }
 
@@ -112,125 +126,88 @@ export default function PlayersForm(props) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <animated.form
-          style={spring}
-          className="flex flex-col justify-center items-center"
-          onSubmit={handleSubmit}
-        >
-          <h2 className="text-lg font-bold text-slate-500 transition-all duration-500 dark:text-slate-200">
-            Ievadi spēlētāju vārdus un izvēlies ikonu
-          </h2>
-          <div className="flex flex-col m-4">
-            <div>
-              <CustomInput />
-              <Select
-                classNames={{
-                  control: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  MenuList: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  option: ({ isFocused, isSelected }) =>
-                    clsx(
-                      isFocused &&
-                        "active:bg-gray-200 bg-white  transition-all duration-500 dark:bg-slate-800",
-                      isSelected &&
-                        "bg-white transition-all duration-500 dark:bg-slate-800",
-                      "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
-                    ),
-                  menu: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  singleValue: () =>
-                    "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
-                  valueContainer: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  placeholder: () => "text-slate-500 dark:text-slate-200",
-                }}
-                options={avatarIcons.filter(
-                  (icon) =>
-                    icon.key !=
-                    selectedAvatar
-                      .map((stateIcon) => stateIcon.key)
-                      .filter((key) => key == icon.key)
-                )}
-                onChange={(event) => handleChange(event, 0)}
-                placeholder="Izvēlies ikonu..."
-                isSearchable={false}
-              />
-            </div>
-            <div>
-              <CustomInput />
-              <Select
-                classNames={{
-                  control: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  MenuList: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  option: ({ isFocused, isSelected }) =>
-                    clsx(
-                      isFocused &&
-                        "active:bg-gray-200 bg-white transition-all duration-500 dark:bg-slate-800",
-                      isSelected &&
-                        "bg-white transition-all duration-500 dark:bg-slate-800",
-                      "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
-                    ),
-                  menu: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  singleValue: () =>
-                    "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
-                  valueContainer: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  placeholder: () => "text-slate-500 dark:text-slate-200",
-                }}
-                options={avatarIcons.filter(
-                  (icon) =>
-                    icon.key !=
-                    selectedAvatar
-                      .map((stateIcon) => stateIcon.key)
-                      .filter((key) => key == icon.key)
-                )}
-                onChange={(event) => handleChange(event, 1)}
-                placeholder="Izvēlies ikonu..."
-                isSearchable={false}
-              />
-            </div>
-            <div>
-              <CustomInput />
-              <Select
-                classNames={{
-                  control: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  MenuList: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  option: ({ isFocused, isSelected }) =>
-                    clsx(
-                      isFocused &&
-                        "bg-white transition-all duration-500 dark:bg-slate-800",
-                      isSelected &&
-                        "bg-white transition-all duration-500 dark:bg-slate-800",
-                      "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
-                    ),
-                  menu: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  singleValue: () =>
-                    "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
-                  valueContainer: () =>
-                    "bg-white transition-all duration-500 dark:bg-slate-800",
-                  placeholder: () => "text-slate-500 dark:text-slate-200",
-                }}
-                options={avatarIcons.filter(
-                  (icon) =>
-                    icon.key !=
-                    selectedAvatar
-                      .map((stateIcon) => stateIcon.key)
-                      .filter((key) => key == icon.key)
-                )}
-                onChange={(event) => handleChange(event, 2)}
-                placeholder="Izvēlies ikonu..."
-                isSearchable={false}
-              />
-            </div>
-
-            {props.number == 4 ? (
+        <>
+          <animated.form
+            style={spring}
+            className="flex flex-col justify-center items-center"
+            onSubmit={handleSubmit}
+          >
+            <h2 className="text-lg font-bold text-slate-500 transition-all duration-500 dark:text-slate-200">
+              Ievadi spēlētāju vārdus un izvēlies ikonu
+            </h2>
+            <div className="flex flex-col m-4">
+              <div>
+                <CustomInput />
+                <Select
+                  classNames={{
+                    control: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    MenuList: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    option: ({ isFocused, isSelected }) =>
+                      clsx(
+                        isFocused &&
+                          "active:bg-gray-200 bg-white  transition-all duration-500 dark:bg-slate-800",
+                        isSelected &&
+                          "bg-white transition-all duration-500 dark:bg-slate-800",
+                        "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
+                      ),
+                    menu: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    singleValue: () =>
+                      "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
+                    valueContainer: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    placeholder: () => "text-slate-500 dark:text-slate-200",
+                  }}
+                  options={avatarIcons.filter(
+                    (icon) =>
+                      icon.key !=
+                      selectedAvatar
+                        .map((stateIcon) => stateIcon.key)
+                        .filter((key) => key == icon.key)
+                  )}
+                  onChange={(event) => handleChange(event, 0)}
+                  placeholder="Izvēlies ikonu..."
+                  isSearchable={false}
+                />
+              </div>
+              <div>
+                <CustomInput />
+                <Select
+                  classNames={{
+                    control: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    MenuList: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    option: ({ isFocused, isSelected }) =>
+                      clsx(
+                        isFocused &&
+                          "active:bg-gray-200 bg-white transition-all duration-500 dark:bg-slate-800",
+                        isSelected &&
+                          "bg-white transition-all duration-500 dark:bg-slate-800",
+                        "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
+                      ),
+                    menu: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    singleValue: () =>
+                      "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
+                    valueContainer: () =>
+                      "bg-white transition-all duration-500 dark:bg-slate-800",
+                    placeholder: () => "text-slate-500 dark:text-slate-200",
+                  }}
+                  options={avatarIcons.filter(
+                    (icon) =>
+                      icon.key !=
+                      selectedAvatar
+                        .map((stateIcon) => stateIcon.key)
+                        .filter((key) => key == icon.key)
+                  )}
+                  onChange={(event) => handleChange(event, 1)}
+                  placeholder="Izvēlies ikonu..."
+                  isSearchable={false}
+                />
+              </div>
               <div>
                 <CustomInput />
                 <Select
@@ -262,31 +239,84 @@ export default function PlayersForm(props) {
                         .map((stateIcon) => stateIcon.key)
                         .filter((key) => key == icon.key)
                   )}
-                  onChange={(event) => handleChange(event, 3)}
+                  onChange={(event) => handleChange(event, 2)}
                   placeholder="Izvēlies ikonu..."
                   isSearchable={false}
                 />
               </div>
-            ) : null}
-          </div>
 
-          <div className="flex flex-col py-2">
-            <button
-              className="grow rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 dark:text-slate-100 dark:ring-inset transition-all duration-500 dark:bg-slate-500"
-              type="submit"
-            >
-              Sākt spēli
-            </button>
-            {error && (
-              <animated.p
-                style={spring}
-                className="text-xs font-semibold  text-red-500"
+              {props.number == 4 ? (
+                <div>
+                  <CustomInput />
+                  <Select
+                    classNames={{
+                      control: () =>
+                        "bg-white transition-all duration-500 dark:bg-slate-800",
+                      MenuList: () =>
+                        "bg-white transition-all duration-500 dark:bg-slate-800",
+                      option: ({ isFocused, isSelected }) =>
+                        clsx(
+                          isFocused &&
+                            "bg-white transition-all duration-500 dark:bg-slate-800",
+                          isSelected &&
+                            "bg-white transition-all duration-500 dark:bg-slate-800",
+                          "hover:cursor-pointer bg-white transition-all duration-500 dark:bg-slate-800"
+                        ),
+                      menu: () =>
+                        "bg-white transition-all duration-500 dark:bg-slate-800",
+                      singleValue: () =>
+                        "text-slate-200 bg-white transition-all duration-500 dark:bg-slate-800",
+                      valueContainer: () =>
+                        "bg-white transition-all duration-500 dark:bg-slate-800",
+                      placeholder: () => "text-slate-500 dark:text-slate-200",
+                    }}
+                    options={avatarIcons.filter(
+                      (icon) =>
+                        icon.key !=
+                        selectedAvatar
+                          .map((stateIcon) => stateIcon.key)
+                          .filter((key) => key == icon.key)
+                    )}
+                    onChange={(event) => handleChange(event, 3)}
+                    placeholder="Izvēlies ikonu..."
+                    isSearchable={false}
+                  />
+                </div>
+              ) : null}
+            </div>
+
+            <div className="flex flex-col py-2">
+              <button
+                className="grow rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 dark:text-slate-100 dark:ring-inset transition-all duration-500 dark:bg-slate-500"
+                type="submit"
               >
-                Vārdu ievadi visiem spēlētājiem
-              </animated.p>
-            )}
-          </div>
-        </animated.form>
+                Sākt spēli
+              </button>
+              {error && (
+                <animated.p
+                  style={spring}
+                  className="text-xs font-semibold  text-red-500"
+                >
+                  Vārdu ievadi visiem spēlētājiem
+                </animated.p>
+              )}
+              {duplicateError && (
+                <animated.p
+                  style={spring}
+                  className="text-xs font-semibold  text-red-500"
+                >
+                  Spēlētāju vārdiem jābūt unikāliem
+                </animated.p>
+              )}
+            </div>
+          </animated.form>
+          <button
+            onClick={() => props.back(null)}
+            className="fixed bottom-3 left-3 rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
+          >
+            Uz sākumu
+          </button>
+        </>
       )}
     </main>
   );

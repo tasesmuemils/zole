@@ -127,7 +127,7 @@ export default function About() {
                   </p>
                   <ul>
                     <li className="flex flex-row items-center py-4">
-                      <button className="bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg flex justify-center">
+                      <button className="bg-slate-100 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg flex justify-center">
                         <ImPlus />
                       </button>
                       <p className="pl-3">
@@ -161,6 +161,11 @@ export default function About() {
                   uz ikonām tabulas augšā, atvērsies saraksts ar ikonām un kuram
                   spēlētājam pieder konkrētā ikona.
                 </p>
+                <p className="py-4">
+                  Ja spēles veids ir izvēlēts "Lielais" vai "Zole", pie pēdējā
+                  soļa ir pieejama info ikona, uz kuras uzspiežot, ir iespējams
+                  apskatīt kā tulkojas "jaņi" un "stiķi".
+                </p>
               </div>
             </div>
             <div className="mt-2 mb-5">
@@ -174,9 +179,9 @@ export default function About() {
                 "Zoles" punktu skaitīšanu daudz ērtāku, jo saiti var pievienot
                 kā aplikāciju uz telefona, planšetes vai datora. Īsas
                 instrukcijas, kā pievienot PWA, kā aplikāciju dažādām ierīcēm
-                var atrast.
+                var atrast
                 <a
-                  className="text-xl text-cyan-500 underline"
+                  className="text-xl text-cyan-500 underline pl-1"
                   target="_blank"
                   href="https://www.cdc.gov/niosh/mining/content/hearingloss/installPWA.html"
                   rel="noopener noreferrer"
@@ -194,7 +199,7 @@ export default function About() {
           </div>
 
           {oldGame != null ? (
-            <div className="p-2 fixed bottom-0 left-0 bg-slate-100 dark:bg-cyan-500 w-full">
+            <div className="p-3 flex flex-row justify-center fixed bottom-0 left-0 bg-slate-100 dark:bg-cyan-500 w-full">
               <button
                 style={spring}
                 onClick={handleClick}
@@ -204,7 +209,7 @@ export default function About() {
               </button>
             </div>
           ) : (
-            <div className="p-2 fixed bottom-0 left-0 bg-slate-100 dark:bg-cyan-500 w-full">
+            <div className="p-3 flex flex-row justify-center fixed bottom-0 left-0 bg-slate-100 dark:bg-cyan-500 w-full">
               <button
                 style={spring}
                 onClick={handleToStartClick}

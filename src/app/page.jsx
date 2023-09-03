@@ -74,5 +74,5 @@ export default function Home() {
     );
   }
 
-  return <PlayersForm number={playersView} />;
+  return <PlayersForm back={setPlayersCount} number={playersView} />;
 }

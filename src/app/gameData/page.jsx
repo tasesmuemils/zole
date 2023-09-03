@@ -150,7 +150,7 @@ export default function GameData() {
             </animated.table>
             <button
               onClick={handleControlsOpen}
-              className="bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
+              className="bg-slate-100 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
             >
               <ImPlus />
             </button>

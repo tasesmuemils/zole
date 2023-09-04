@@ -7,9 +7,12 @@ export default function Table({ gameType, playerCount }) {
       <div>
         <div className="flex flex-col justify-center">
           <div
-            className={`grid grid-cols-${
-              !playerCount ? "[40%_20%_20%_20%]" : "[40%_15%_15%_15%_15%]"
-            } border-b pb-1`}
+            style={{
+              gridTemplateColumns: `${
+                playerCount ? "40% 15% 15% 15% 15%" : "40% 20% 20% 20%"
+              }`,
+            }}
+            className={`grid border-b pb-1`}
             // className="grid grid-cols-[40%_15%_15%_15%_15%]"
           >
             <p>Scenārijs</p>
@@ -20,10 +23,13 @@ export default function Table({ gameType, playerCount }) {
           </div>
           {Object.keys(scoreTable[gameType]).map((item, index) => (
             <div
+              style={{
+                gridTemplateColumns: `${
+                  playerCount ? "40% 15% 15% 15% 15%" : "40% 20% 20% 20%"
+                }`,
+              }}
               key={`${item}Table${index}`}
-              className={`grid grid-cols-${
-                !playerCount ? "[40%_20%_20%_20%]" : "[40%_15%_15%_15%_15%]"
-              } items-center border-b py-2`}
+              className={`grid items-center border-b py-2`}
             >
               <div>{item}</div>
               <div className="text-center">

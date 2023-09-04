@@ -53,7 +53,6 @@ export default function GameData() {
   const scrollRef = useRef();
 
   useEffect(() => {
-    console.log("TEST");
     if (shouldUpdate) setShouldUpdate(false);
 
     if (!score) {

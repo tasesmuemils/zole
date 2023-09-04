@@ -55,16 +55,10 @@ export default function RootLayout({ children }) {
 
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body
-        // initial={{ opacity: 0 }}
-        // animate={{ opacity: 1 }}
-        // transition={{ duration: 0.3, delay: 0.1 }}
-        className={inter.className}
-      >
+      <body className={inter.className}>
         {" "}
         <Providers>
           <Navigation />
-          {/* <NewNavigation /> */}
           {children}
         </Providers>
       </body>

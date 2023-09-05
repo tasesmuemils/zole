@@ -13,7 +13,6 @@ export default function Table({ gameType, playerCount }) {
               }`,
             }}
             className={`grid border-b pb-1`}
-            // className="grid grid-cols-[40%_15%_15%_15%_15%]"
           >
             <p>Scenārijs</p>
             <p className="text-center">L</p>

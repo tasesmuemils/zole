@@ -34,7 +34,7 @@ export default function About() {
   });
 
   return (
-    <main className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-between px-5 py-24">
+    <main className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative min-h-screen flex-col items-center justify-center px-5 py-24">
       {isLoading ? (
         <Spinner />
       ) : (

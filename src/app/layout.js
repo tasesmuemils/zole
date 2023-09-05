@@ -19,11 +19,6 @@ export const metadata = {
     default: APP_DEFAULT_TITLE,
     template: APP_TITLE_TEMPLATE,
   },
-  // icons: {
-  //   icon: ["/favicon.ico?v=4"],
-  //   apple: ["/apple-touch-icon.png?v=4"],
-  //   shortcut: ["/apple-touch-icon.png"],
-  // },
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
   themeColor: "#FFFFFF",
@@ -56,7 +51,6 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body className={inter.className}>
-        {" "}
         <Providers>
           <Navigation />
           {children}

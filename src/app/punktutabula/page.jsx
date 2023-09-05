@@ -11,7 +11,6 @@ export default function PunktuTabula() {
   let [checked, setChecked] = useState(false);
 
   const handleChange = (e) => {
-    // e.target.checked == true ? setChecked(4) : setChecked(3);
     setChecked(e.target.checked);
   };
 
@@ -39,7 +38,7 @@ export default function PunktuTabula() {
   });
 
   return (
-    <main className="bg-white transition-all duration-500 dark:bg-slate-800 flex relative flex-col items-center px-5 py-24">
+    <main className="bg-white transition-all duration-500 dark:bg-slate-800 min-h-screen flex relative flex-col items-center justify-center px-5 py-24">
       {isLoading ? (
         <Spinner />
       ) : (
@@ -80,7 +79,7 @@ export default function PunktuTabula() {
               <button
                 style={spring}
                 onClick={handleClick}
-                className="rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
+                className="rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500  hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
               >
                 Atsākt iepriekšējo spēli
               </button>
@@ -90,7 +89,7 @@ export default function PunktuTabula() {
               <button
                 style={spring}
                 onClick={handleToStartClick}
-                className="rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
+                className="rounded-lg text-base leading-6 font-semibold px-5 py-1 m-2 ring-2 ring-inset hover:bg-cyan-500  hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
               >
                 Uz sākumu
               </button>

@@ -94,7 +94,26 @@ export default function PlayersForm(props) {
         score: [],
       });
 
+    // Create "Pules" list
+    if (props.pules) {
+      const pulesList = [
+        { player: "Kopējā pule", pules: 0 },
+        { player: e.target[0].value, pules: 0 },
+        { player: e.target[2].value, pules: 0 },
+        { player: e.target[4].value, pules: 0 },
+      ];
+
+      e.target[6].tagName != "BUTTON" &&
+        pulesList.push({
+          player: e.target[6].value,
+          pules: 0,
+        });
+
+      localStorage.setItem("pulesList", JSON.stringify(pulesList));
+    }
+
     // Sets values to local storage
+    localStorage.setItem("pules", props.pules);
     localStorage.removeItem("players");
     localStorage.setItem("players", JSON.stringify(playersList));
     router.push("/gameData");

@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ImInfo } from "react-icons/im";
 
-export default function Controls({ scores, players, getScore, open }) {
+export default function Controls({ scores, players, getScore, open, pules }) {
   const [winner, setWinner] = useState(null);
   const [gameType, setGameType] = useState(null);
   const [lielais, setLielais] = useState(null);
@@ -51,6 +51,8 @@ export default function Controls({ scores, players, getScore, open }) {
     handleScenario(scores[gameType]["Spēlētājs, kurš zaudē"][players.length]);
   }
 
+  console.log(Object.keys(scores).slice(0, -1));
+
   return (
     <div className="z-10 bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 w-full h-full px-10 py-5 fixed bottom-0 left-0 flex justify-center items-center">
       <div className="grid justify-center">
@@ -83,15 +85,30 @@ export default function Controls({ scores, players, getScore, open }) {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <ControlButtonsText text="Spēles veids" />
-            <div className="grid grid-cols-2 justify-center">
-              {Object.keys(scores).map((gameType, index) => (
-                <ControlsButton
-                  key={gameType + index + 1}
-                  text={gameType}
-                  index={index}
-                  onClickFunction={handleGameTypeClick}
-                />
-              ))}
+            <div
+              className={`grid grid-cols-${
+                pules == "true" ? `1` : `2`
+              } justify-center`}
+            >
+              {pules == "true"
+                ? Object.keys(scores)
+                    .slice(0, -1)
+                    .map((gameType, index) => (
+                      <ControlsButton
+                        key={gameType + index + 1}
+                        text={gameType}
+                        index={index}
+                        onClickFunction={handleGameTypeClick}
+                      />
+                    ))
+                : Object.keys(scores).map((gameType, index) => (
+                    <ControlsButton
+                      key={gameType + index + 1}
+                      text={gameType}
+                      index={index}
+                      onClickFunction={handleGameTypeClick}
+                    />
+                  ))}
             </div>
           </motion.div>
         )}

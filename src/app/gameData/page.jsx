@@ -5,7 +5,7 @@ import Controls from "./Controls";
 import { scoreTable } from "./scoreTable";
 import { motion } from "framer-motion";
 import { useSpring, animated } from "@react-spring/web";
-import { ImBin, ImSpades, ImClubs, ImPlus } from "react-icons/im";
+import { ImBin, ImSpades, ImClubs, ImPlus, ImUnlocked } from "react-icons/im";
 import Link from "next/link";
 import Spinner from "../Spinner";
 import { avatarIcons } from "../PlayersForms";
@@ -28,6 +28,9 @@ export default function GameData() {
   const [openNameModal, setOpenNameModal] = useState(false);
   const [openControls, setOpenControls] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pules, setPules] = useState(false);
+  const [pulesList, setPulesList] = useState(null);
+  const [openPulesModal, setOpenPulesModal] = useState(false);
 
   // Capture Delete last result Modals result
   const setDeleteLastResult = (value) => {
@@ -50,9 +53,14 @@ export default function GameData() {
     setOpenControls(true);
   };
 
+  const handlePulesModal = () => {
+    setOpenPulesModal(true);
+  };
+
   const scrollRef = useRef();
 
   useEffect(() => {
+    setPules(JSON.parse(localStorage.getItem("pules")));
     if (shouldUpdate) setShouldUpdate(false);
 
     if (!score) {
@@ -61,6 +69,10 @@ export default function GameData() {
       localStorage.removeItem("players");
       localStorage.setItem("players", JSON.stringify(score));
       setPlayersList(JSON.parse(localStorage.getItem("players")));
+    }
+
+    if (!pulesList) {
+      setPulesList(JSON.parse(localStorage.getItem("pulesList")));
     }
 
     if (scrollRef.current != null) {
@@ -81,8 +93,16 @@ export default function GameData() {
     setScore(value);
   };
 
+  console.log(playersList, pulesList);
+
   return (
     <>
+      <button
+        // onClick={handleNewGameModal}
+        className="z-[1] flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none fixed right-0 top-[17px] w-[50px] h-[50px] rounded-l-lg"
+      >
+        <p>K</p>
+      </button>
       <button
         onClick={handleNewGameModal}
         className="z-[1] flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none fixed top-[80px] w-[50px] h-[50px] rounded-r-lg"
@@ -149,14 +169,27 @@ export default function GameData() {
                 />
               )}
             </animated.table>
-            <button
-              onClick={handleControlsOpen}
-              className="bg-slate-100 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2 flex justify-center"
-            >
-              <ImPlus />
-            </button>
+            <div className="flex flex-row fixed bottom-0 left-2/4 -translate-y-1/2 -translate-x-1/2">
+              {" "}
+              <button
+                onClick={handleControlsOpen}
+                className="bg-slate-100 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg  flex justify-center items-center"
+              >
+                <ImPlus />
+              </button>
+              {pules && (
+                <button
+                  onClick={handlePulesModal}
+                  className="ml-10 text-center bg-slate-100 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 px-4 py-4 rounded-lg  flex justify-center items-center"
+                >
+                  <ImUnlocked />
+                  {/* <p className="text-bold">P</p> */}
+                </button>
+              )}
+            </div>
             {openControls && (
               <Controls
+                pules={pules}
                 getScore={getScore}
                 scores={scoreTable}
                 players={playersList}
@@ -172,6 +205,13 @@ export default function GameData() {
       )}
       {openNameModal && (
         <NameModal open={setOpenNameModal} playersList={playersList} />
+      )}
+      {openPulesModal && (
+        <PulesModal
+          open={setOpenPulesModal}
+          playersList={playersList}
+          avatarIcons={avatarIcons}
+        />
       )}
     </>
   );
@@ -417,6 +457,92 @@ const NameModal = ({ open, playersList }) => {
                 </h2>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const PulesModal = ({ open, playersList, avatarIcons }) => {
+  // const [pulesList, setPulesList] = useState(null);
+
+  // useEffect(() => {
+  //   localStorage.setItem("pulesList", JSON.stringify("TEST"));
+  // }, [pulesList]);
+
+  const handlePulesBtnClick = (e) => {
+    console.log(e.currentTarget.value);
+    open(false);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      id="popup-modal"
+      className="flex justify-center items-center bg-slate-700 bg-opacity-80 fixed top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 min-h-screen"
+    >
+      <div className="relative w-full max-w-md max-h-full">
+        <div className="py-3 relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            type="button"
+            className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            onClick={() => open(false)}
+          >
+            <svg
+              className="w-3 h-3"
+              // aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span className="sr-only">Close modal</span>
+          </button>
+          <div className="pt-10 pb-5 px-6 text-center flex flex-col">
+            <button
+              // onClick={() => open(false)}
+              value="Kopējā pule"
+              onClick={handlePulesBtnClick}
+              type="button"
+              className="rounded-lg text-sm leading-6 font-semibold px-4 py-4 m-5 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 dark:text-slate-100 dark:inset transition-all duration-500 dark:bg-slate-500"
+            >
+              Kopējā pule
+            </button>
+            {playersList.map((player, index) => {
+              return (
+                <button
+                  key={index + player.player + "PULESBTN"}
+                  // onClick={() => open(false)}
+                  value={player.player}
+                  onClick={handlePulesBtnClick}
+                  // type="button"
+                  className="rounded-lg text-sm leading-6 font-semibold px-4 py-4 m-5 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 dark:text-slate-100 dark:inset transition-all duration-500 dark:bg-slate-500"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="mb-2">
+                      {
+                        avatarIcons.find((icon) => icon.key == player.icon.key)
+                          .label
+                      }
+                    </div>
+                    <div className="flex flex-row">
+                      <p>Personīgā pule</p>
+                      <p className="pl-1">{player.player}</p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

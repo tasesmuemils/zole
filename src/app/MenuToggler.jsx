@@ -20,6 +20,7 @@ const Path = ({ openPath, closedPath, ...rest }) => {
 export default function MenuToggler({ toggle }) {
   return (
     <button
+      aria-label="menu"
       className="flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 z-50 border-0 outline-none focus:outline-none absolute top-[17px] w-[50px] h-[50px] rounded-r-lg"
       onClick={toggle}
     >

@@ -65,10 +65,11 @@ export default function Home() {
                 <PlayersCount number="3" setPlayersCount={setPlayersCount} />
                 <PlayersCount number="4" setPlayersCount={setPlayersCount} />
               </div>
-              <div className="flex flex-row justify-center mt-10">
+              <div className="flex flex-col justify-center items-center mt-10">
                 <h2 className="px-10 text-center text-base font-bold text-slate-500 transition-all duration-500 dark:text-slate-200">
                   Pagaidām pieejams spēles veids "Galdiņš"
                 </h2>
+                <InstallPWA />
                 {/* <label className="relative inline-flex items-center cursor-pointer">
                   <span className="mr-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Galdiņš
@@ -108,3 +109,42 @@ export default function Home() {
     <PlayersForm pules={checked} back={setPlayersCount} number={playersView} />
   );
 }
+
+const InstallPWA = () => {
+  const [supportsPWA, setSupportsPWA] = useState(false);
+  const [promptInstall, setPromptInstall] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      console.log("we are being triggered :D");
+      setSupportsPWA(true);
+      setPromptInstall(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => window.removeEventListener("transitionend", handler);
+  }, []);
+
+  const onClick = (evt) => {
+    evt.preventDefault();
+    if (!promptInstall) {
+      return;
+    }
+    promptInstall.prompt();
+  };
+  if (!supportsPWA) {
+    return null;
+  }
+  return (
+    <button
+      className="w-3/5 rounded-lg text-base leading-6 font-semibold px-5 py-1 m-6 ring-2 ring-inset hover:bg-cyan-500 dark:hover:bg-cyan-500 hover:ring-cyan-500 hover:text-slate-50 ring-slate-500 text-slate-500 transition-all duration-500 dark:text-slate-100 dark:ring-inset dark:bg-slate-500"
+      id="setup_button"
+      aria-label="Install app"
+      title="Install app"
+      onClick={onClick}
+    >
+      Instalē kā aplikāciju
+    </button>
+  );
+};

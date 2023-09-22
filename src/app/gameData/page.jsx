@@ -97,12 +97,12 @@ export default function GameData() {
 
   return (
     <>
-      <button
+      {/* <button
         // onClick={handleNewGameModal}
         className="z-[1] flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none fixed right-0 top-[17px] w-[50px] h-[50px] rounded-l-lg"
       >
         <p>K</p>
-      </button>
+      </button> */}
       <button
         onClick={handleNewGameModal}
         className="z-[1] flex justify-center items-center bg-slate-100 transition-all duration-500 dark:bg-cyan-500 border-0 outline-none focus:outline-none fixed top-[80px] w-[50px] h-[50px] rounded-r-lg"

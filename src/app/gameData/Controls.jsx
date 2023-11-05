@@ -51,8 +51,6 @@ export default function Controls({ scores, players, getScore, open, pules }) {
     handleScenario(scores[gameType]["Spēlētājs, kurš zaudē"][players.length]);
   }
 
-  console.log(Object.keys(scores).slice(0, -1));
-
   return (
     <div className="z-10 bg-slate-50 text-gray-500 dark:bg-slate-600 transition-all duration-500 dark:text-slate-200 w-full h-full px-10 py-5 fixed bottom-0 left-0 flex justify-center items-center">
       <div className="grid justify-center">
@@ -211,8 +209,6 @@ export default function Controls({ scores, players, getScore, open, pules }) {
           >
             <ControlButtonsText text={`Kurš scenārijs tika izspēlēts?`} />
             <div className="flex basis-1 flex-wrap justify-center">
-              {console.log(Object.keys(scores[gameType]).slice(3, 6))}
-              {console.log(lielais)}
               {lielais == "Uzvarēja"
                 ? Object.keys(scores[gameType])
                     .slice(0, 3)
@@ -312,7 +308,6 @@ const scenarioTextChange = (text) => {
 };
 
 const TranslationModal = ({ open, scenarios }) => {
-  console.log(scenarios);
   return (
     <motion.div
       initial={{ opacity: 0 }}

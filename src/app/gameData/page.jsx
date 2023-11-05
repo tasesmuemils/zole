@@ -93,8 +93,6 @@ export default function GameData() {
     setScore(value);
   };
 
-  console.log(playersList, pulesList);
-
   return (
     <>
       {/* <button
@@ -472,7 +470,6 @@ const PulesModal = ({ open, playersList, avatarIcons }) => {
   // }, [pulesList]);
 
   const handlePulesBtnClick = (e) => {
-    console.log(e.currentTarget.value);
     open(false);
   };
 

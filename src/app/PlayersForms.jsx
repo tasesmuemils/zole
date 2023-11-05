@@ -46,14 +46,6 @@ export default function PlayersForm(props) {
     const iconFillCheck = selectedAvatar.every(
       (item) => Object.keys(item).length > 1 || item == false
     );
-    console.log("check", iconFillCheck);
-
-    console.log(
-      e.target[0].value.length,
-      e.target[2].value.length,
-      e.target[4].value.length,
-      e.target[6].tagName
-    );
 
     // Checks form fill
     if (
@@ -137,8 +129,6 @@ export default function PlayersForm(props) {
       })
     );
   };
-
-  console.log(selectedAvatar);
 
   return (
     <main className="bg-white transition-all duration-500 dark:bg-slate-800 flex flex-col justify-center items-center min-h-screen p-24">

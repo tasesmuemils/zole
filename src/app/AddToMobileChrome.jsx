@@ -13,7 +13,11 @@ export default function AddToMobileChrome(props) {
       <div className="py-10 relative bg-slate-800 px-4 pb-6 pt-10 h-full rounded-xl flex flex-col justify-around items-center text-center">
         <ImArrowUp className="text-4xl absolute top-[10px] right-[10px] text-indigo-700 z-10 animate-bounce" />
         <div className="relative bg-primary p-4 h-full rounded-xl flex flex-col justify-around items-center text-center">
-          <button className="absolute top-0 right-0 p-3" onClick={closePrompt}>
+          <button
+            aria-label="close-pwa-intro"
+            className="absolute top-0 right-0 p-3"
+            onClick={closePrompt}
+          >
             <FaTimes className="text-2xl" />
           </button>
           <p className="text-lg">

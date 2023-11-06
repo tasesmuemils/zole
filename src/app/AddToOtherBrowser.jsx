@@ -22,11 +22,11 @@ export default function AddToOtherBrowser(props) {
         </p>
         <div className="flex flex-col gap-4 items-center text-lg">
           <p>
-            Diemžēl, mēs nevaram notriky kādu pārlūku jūs izmantojat. Meklējiet
-            kā var instalēt PWA aplikāciju no mjūsu interneta pārlūka
+            Diemžēl, mēs nevaram noteikt kādu pārlūku jūs izmantojat. Meklējiet
+            kā var instalēt PWA aplikāciju no jūsu interneta pārlūka
           </p>
           <Link className="text-blue-300" href={searchUrl} target="_blank">
-            Pmāēgini šo
+            Pamēģini šo
           </Link>
         </div>
         <button className="border-2 p-1" onClick={doNotShowAgain}>

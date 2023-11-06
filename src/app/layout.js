@@ -53,6 +53,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <Providers>
+          {/*GOOGLE ANALYTICS*/}
           <GoogleAnalytics />
           <Navigation />
           {children}
